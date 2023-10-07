@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div id="container">
+        <!-- step1. 모달(팝업창) 만들기 -->
+        <div id="name-modal">
+            <h3>이름을 입력해주세요</h3>
+            <input type="text" id="username">
+            <input type="button" value="확인" onclick="getUsername()">
+        </div>
+        <!-- step2. 세부 컨텐츠 만들기 -->
+        <div id="contents" class="hide">
+            <!-- step3. 인사말 만들기 -->
+            <div class="greeting">
+                <h2><span id="name">000</span>님 환영합니다.</h2>
+                <h2>오늘의 운세를 확인하기 위해 포춘쿠키를 선택해주세요!</h2>
+            </div>
+            <!-- step4. 포춘쿠키 이미지 넣기 -->
+            <!--step5. 포춘쿠키 운세 결과 보여주기 -->
+        </div>
+    </div>
+
+    <script>
+        /* 모달로 부터 사용자 이름을 입력받는 함수*/
+        function getUsername() {
+            /* input 태그 요소에 접근하여 입력값 가져오기 */
+            const input = document.getElementById("username")
+            const username = input.value
+            console.log(input);
+            console.log(username);
+
+            /* 입력값의 길이가 0보다 크다면 모달 숨기기. 아니라면 경고창 띄우기 */
+            if(username.length > 0 ){
+                /* 모달 숨기기 */
+                const modal = document.getElementById('name-modal')
+                modal.classList.add('hide')
+
+                /* 컨텐츠 보이기 */
+                const contents = document.getElementById('contents')
+                contents.classList.remove('hide')
+                contents.classList.add('show')
+
+                /*인사말 넣기*/
+                showUsername(username)
+
+            } else {
+                window.alert('이름을 입력해주세요!')
+            }
+        }
+        
+        /*사용자 이름을 화면에 보여주는 함수*/
+        function showUsername(username) {
+            const span = document.getElementById('name')
+            span.innerText = username
+        }
+    </script>
+</body>
+</html>
