@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/0441fe5535.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+    <style>
+        /* 초기화 */
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+        ul, ol, li {
+            list-style: none;
+        }
+
+        body{
+            height: 100vh;
+            background: linear-gradient(25deg, violet, pink);
+        }
+
+        #container > h1 {
+            position: absolute;
+            top: 5vh;
+            left: 7vw;
+        }
+        #container > p {
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%);
+        }
+        section{
+            margin-top: 20vh;
+            padding: 0 150px;
+        }
+        /*슬라이더 스타일링*/
+        .my-slick .inner {
+            height: 45vh;
+            margin: 0 3vw;
+            background-color: white;
+            padding: 8vh 2.5vw;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            border-radius: 10px;
+            box-shadow: 15px 15px 20px rgba(0,0,0,0.2);
+            opacity: 0.6;
+            transform: scale(0.8);
+            transition: opacity 1s, transform 1s;
+        }
+        /* 슬라이더 컨트롤러 */
+        .my-slick .slick-dots {
+            display: flex;
+            justify-content: center;
+            margin: 3vh 0;
+        }
+        .my-slick .slick-dots li button {
+            padding: 8px 8px;
+            margin: 0 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            color: transparent;
+            border: none;
+            background-color: #e4f1ff;
+            opacity: 0.6;
+        }
+        .my-slick .slick-dots li button:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+        /*센터 모드 */
+        .my-slick .inner.slick-center {
+            opacity: 0.9;
+            transform: scale(1.0);
+        }
+        /* 앨범 이미지 */
+        .my-slick .inner .pic {
+            width: 13vw;
+            height: 13vw;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-position: center;
+            background-size: cover;
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.1);
+        }
+  
+        .my-slick .inner .pic .dot {
+            width: 3vw;
+            height: 3vw;
+            border-radius: 50%;
+            background-color:  #e4f1ff;
+            z-index: 3;
+            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.1);
+            
+        }
+        /*** 2023.11.11 수업 여기서 부터 시작하기 ***/
+        /* 제목, 플레이어 */
+        .my-slick .inner .txt {
+            text-align: center;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+        }
+
+        .my-slick .inner .txt > h2 {
+            word-break: keep-all;
+        }
+
+        .my-slick .inner .txt p {
+            margin-bottom: 2vh;
+        }
+        .my-slick .inner .txt ul {
+            display: flex;
+            justify-content: space-around;
+        }
+        .my-slick .inner .txt ul li {
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: 0.5s;
+        }
+
+        .my-slick .inner .txt ul li.play{
+            transform: scale(1.5);
+        }
+        .my-slick .inner .txt ul li:hover{
+            transform: scale(1.5);
+            opacity: 0.9;
+        }
+        .my-slick .inner .txt ul li.play:hover{
+            transform: scale(2.0);
+            opacity: 1.0;
+        }
+
+        /*앨범 이미지 회전*/
+        @keyframes ani {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        .my-slick .inner.on .pic {
+            animation: ani 10s linear infinite;
+        }
+
+        /* 화살표 넣기 */
+        .my-slick .slick-arrow {
+            font-size: 32px;
+            opacity: 0.7;
+            z-index: 3;
+        }
+
+        .my-slick .slick-arrow:hover {
+            cursor: pointer;
+            opacity: 1.0;
+        }
+
+        .my-slick .slick-prev {
+            position: absolute;
+            top: 50%;
+        }
+
+        .my-slick .slick-next {
+            position: absolute;
+            right: 0px;
+            top: 50%;
+        }
+
+        .my-slick .slick-prev:hover {
+            animation: 1s ease-out infinite move-left ;
+        }
+
+        .my-slick .slick-next:hover {
+            animation: 1s ease-out infinite move-right ;
+        }
+
+
+        /*화살표 애니메이ㅕㄴ */
+        @keyframes move-right {
+            from{
+                right: -10px;
+            }
+            to{
+                right: 0px;
+            }
+        }
+
+        @keyframes move-left {
+            from{
+                left: -10px;
+            }
+            to{
+                left: 0px;
+            }
+            
+        }
+
+    </style>
+</head>
+<body>
+    <!---
+    1. slick.js 사용하는 법 부터 설명하기(옵션설명하기)
+    2. 플레이리스트 구조 만들기
+    3. css를 넣어보며 변화 살펴보기
+    4. 초기화 넣어보기 
+    5. font awesome 넣기
+    6. audio 넣기
+    
+    -->
+    <div id="container">
+        <h1>
+            <strong>K-POP PLAYLIST</strong>
+        </h1>
+        <section>
+            <div class="my-slick">
+                <!-- track1 -->
+                <div class="inner">
+                    <div class="pic">
+                        <div class="dot"></div>
+                    </div>
+                    <div class="txt">
+                        <h2>My Title1</h2>
+                        <p>Artist</p>
+                        <ul>
+                            <li class="pause">
+                                <i class="fas fa-pause"></i>
+                            </li>
+                            <li class="play">
+                                <i class="fas fa-play"></i>
+                            </li>
+                            <li class="load">
+                                <i class="fas fa-redo-alt"></i>
+                            </li>
+                        </ul>
+                        <audio src="#"></audio>
+                    </div>
+                </div>
+                <!-- track2 -->
+                <div class="inner">
+                    <div class="pic">
+                        <div class="dot"></div>
+                    </div>
+                    <div class="txt">
+                        <h2>My Title2</h2>
+                        <p>Artist</p>
+                        <ul>
+                            <li class="pause">
+                                <i class="fas fa-pause"></i>
+                            </li>
+                            <li class="play">
+                                <i class="fas fa-play"></i>
+                            </li>
+                            <li class="load">
+                                <i class="fas fa-redo-alt"></i>
+                            </li>
+                        </ul>
+                        <audio src="#"></audio>
+                    </div>
+                </div>
+                <!-- track3 -->
+                <div class="inner">
+                    <div class="pic">
+                        <div class="dot"></div>
+                    </div>
+                    <div class="txt">
+                        <h2>My Title3</h2>
+                        <p>Artist</p>
+                        <ul>
+                            <li class="pause">
+                                <i class="fas fa-pause"></i>
+                            </li>
+                            <li class="play">
+                                <i class="fas fa-play"></i>
+                            </li>
+                            <li class="load">
+                                <i class="fas fa-redo-alt"></i>
+                            </li>
+                        </ul>
+                        <audio src="#"></audio>
+                    </div>
+                </div>
+                <!-- track4 -->
+                <div class="inner">
+                    <div class="pic">
+                        <div class="dot"></div>
+                    </div>
+                    <div class="txt">
+                        <h2>My Title4</h2>
+                        <p>Artist</p>
+                        <ul>
+                            <li class="pause">
+                                <i class="fas fa-pause"></i>
+                            </li>
+                            <li class="play">
+                                <i class="fas fa-play"></i>
+                            </li>
+                            <li class="load">
+                                <i class="fas fa-redo-alt"></i>
+                            </li>
+                        </ul>
+                        <audio src="#"></audio>
+                    </div>
+                </div>
+                <!-- track5 -->
+                <div class="inner">
+                    <div class="pic">
+                        <div class="dot"></div>
+                    </div>
+                    <div class="txt">
+                        <h2>My Title5</h2>
+                        <p>Artist</p>
+                        <ul>
+                            <li class="pause">
+                                <i class="fas fa-pause"></i>
+                            </li>
+                            <li class="play">
+                                <i class="fas fa-play"></i>
+                            </li>
+                            <li class="load">
+                                <i class="fas fa-redo-alt"></i>
+                            </li>
+                        </ul>
+                    </div>
+                    <audio src="#"></audio>
+                </div>
+            </div>
+        </section>
+        <p> 2023 Created by SEOLEUNJU</p>
+    </div>
+
+    
+  <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.my-slick').slick({
+        centerMode: true,
+        slidesToShow: 3,
+        dots: true,
+        infinite: true,
+        /* 화살표 */
+        prevArrow : '<i class="fas fa-angle-left slick-prev" onclick="initMusic()"></i>',
+        nextArrow : '<i class="fas fa-angle-right slick-next" onclick="initMusic()"></i>'
+      });
+    });
+
+    //*1. 앨범 제목, 아티스트, 이미지, 음악 넣기 *//
+    const MUSIC_TITLES = ["Better Things", "Hype Boy", "Super Shy", "이브 프시케 그리고 푸른수염의 아내", "Nonstop"]
+    const ARTISTS = ["AESPA", "NewJeans", "NewJeans", "르세라핌", "오마이걸"]
+
+    const lists = document.getElementsByClassName("inner")
+    const titles = document.getElementsByTagName("h2")
+    const artists = document.getElementsByTagName("p")
+    const images = document.getElementsByClassName("pic")
+    const audios = document.getElementsByTagName("audio")
+
+    for(let i = 0; i<titles.length; i++) {
+        titles[i].innerText = MUSIC_TITLES[i]
+        artists[i].innerText = ARTISTS[i]
+        images[i].style.backgroundImage = `url(./images/image${i+1}.jpg)`
+        audios[i].src = `./media/${MUSIC_TITLES[i]}.mp3`
+    }
+
+
+    //2. 플레이어 함수 만들기
+    function initMusic() {
+        for(let el of audios) {
+            el.closest(".inner").classList.remove('on')
+            el.pause()
+            el.load()
+        }
+    }
+    //e는 event 객체
+    function playMusic(e) {
+        initMusic()
+        e.currentTarget.closest(".slick-center").classList.add('on')
+        e.currentTarget.closest(".slick-center").querySelector("audio").play()
+    
+    }
+
+    function pauseMusic(e) {
+        e.currentTarget.closest(".slick-center").classList.remove('on')
+        e.currentTarget.closest(".slick-center").querySelector("audio").pause()
+    }
+
+    function loadMusic(e) {
+        initMusic()
+        e.currentTarget.closest(".slick-center").classList.add('on')
+        e.currentTarget.closest(".slick-center").querySelector("audio").load()
+        e.currentTarget.closest(".slick-center").querySelector("audio").play()
+    }
+
+
+    //3.패널 활성화 체크하기(활성화 된 패널은 가운데 오는 패널이며, 활성화된 패널만이 플레이어가 실행됨)
+    function isActive(e) {
+   
+        return e.currentTarget.closest(".inner").classList.contains("slick-center")
+    }
+
+    //4. 플레이어 아이콘마다 클릭 이벤트 붙이기
+    for(let el of lists) {
+        let play = el.querySelector(".play")
+        let pause = el.querySelector(".pause")
+        let load = el.querySelector(".load")
+
+        play.addEventListener("click", e => {
+            if(isActive(e)) playMusic(e)
+        })
+        pause.addEventListener("click", e => {
+            if(isActive(e)) pauseMusic(e)
+        })
+        load.addEventListener("click", e => {
+            if(isActive(e)) loadMusic(e)
+        })
+    }
+
+
+  </script>
+</body>
+</html>
