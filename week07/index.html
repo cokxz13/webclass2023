@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>SolarSystem Clicker Game</title>
+</head>
+<body>
+    <header>
+        <button>SAVE</button>
+        <h2>Solar System Clicker Game</h2>
+        <button>LOAD</button>
+    </header>
+    <section>
+        <div class="container">
+            <div class="left">
+                <h2>scores : <span class="score">50</span></h2>
+                <img src="img/earth.png" alt="earth" class="clicker-image" draggable=false onclick="increamentScore()">
+            </div>
+            <div class="right">
+                <div class="upgrade" onclick="upgrade('pointer')">
+                    <div class="icon">
+                        <img src="img/click-pointer.png" widthalt="">
+                    </div>
+                    <div class="contents">
+                        <h2>Pointer</h2>
+                        <p>+1 click<p>
+                        <p> Cost: 50</p>
+                    </div>
+                    <div>
+                        <h3>Level <br/>
+                            <span class="level">0</span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="upgrade" onclick="upgrade('auto')">
+                    <div class="icon">
+                        <img src="img/click-auto.png" alt="">
+                    </div>
+                    <div class="contents">
+                        <h2>Auto</h2>
+                        <p>+1 second</p>
+                        <p> Cost: 125</p>
+                    </div>
+                    <div>
+                        <h3>Level <br/>
+                            <span class="level">0</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <script>
+        const POINTER_SCORE = 50
+        const AUTO_SCORE = 125
+        let score = document.querySelector(".score")
+        let nofc = 1
+        let autoc = 0
+
+        function increamentScore() {
+            score.innerHTML = parseInt(score.innerHTML) + nofc 
+            showNumOfClicks()
+        }
+
+        function showNumOfClicks(){
+            console.log(event.clientX, event.clientY);
+            const left = document.querySelector(".left")
+            const div = document.createElement("div")
+            div.innerText=`+${nofc}`
+            div.style.position="absolute"
+            div.style.top=event.clientY + "px"
+            div.style.left=event.clientX + "px"
+            div.draggable = false;
+            div.classList.add('show-nofc')
+            left.appendChild(div)
+
+            setTimeout(()=> {
+                left.removeChild(div)
+            },900)
+        }
+
+        function upgrade(type) {
+            let sc = parseInt(score.innerHTML)
+            let level = event.currentTarget.querySelector('.level')
+            switch(type) {
+                case "pointer":
+                    if(sc >= POINTER_SCORE) {
+                        score.innerHTML = sc - POINTER_SCORE
+                        level.innerHTML = parseInt(level.innerHTML) + 1
+                        nofc += 1 
+                        
+                    }else alert('need more cost!')
+                    break;
+                case "auto":
+                    if(sc >= AUTO_SCORE) {
+                        score.innerHTML = sc - AUTO_SCORE
+                        level.innerHTML = parseInt(level.innerHTML) + 1
+                        autoc += 1
+                    }else alert('need more cost!')
+                    break;
+            }
+        }
+
+        function init() {
+            setInterval(()=> {
+                score.innerHTML = parseInt(score.innerHTML) + autoc
+            },1000)
+        }
+
+        init()
+    </script>
+</body>
+</html>
