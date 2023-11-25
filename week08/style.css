@@ -1,0 +1,139 @@
+body {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0px;
+    padding: 0px;
+    background-color: black;
+    color: white;
+    padding: 6vh 8vw;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+}
+
+header {
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+header > button {
+    width: 8vw;
+    height: 7vh;
+    font-size: 1.2em;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+    border: 5px solid yellow;
+    border-radius: 15px;
+    padding: 8px 5px;
+    transition: .3s all;
+}
+
+header > button:hover{
+    background-color: white;
+    border: white;
+    color: black;
+}
+
+
+.container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    height: 60vh;
+}
+.left {
+    text-align: center;
+}
+.left h2{
+    font-size: 1.5rem;
+    margin-bottom: 50px;
+    color: white;
+}
+
+.clicker-image{
+    width: 400px;
+    background-size: cover;
+}
+
+.clicker-image:hover{
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.clicker-image:active {
+    opacity: 0.8;
+    transform: scale(1.02);
+}
+
+.show-nofc{
+    position: absolute;
+    font-size: 2rem;
+    font-weight: bold;
+    text-shadow: 
+    -1px 0px yellow, 
+    0px 1px yellow, 
+    1px 0px yellow, 
+    0px -1px yellow;
+    animation: 1s fade-up;
+}
+
+.show-nofc:hover{
+    cursor: pointer;
+}
+
+@keyframes fade-up {
+    0%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    100%{
+        transform: translateY(-200px);
+        opacity: 0;
+    }
+}
+
+.right{
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    height: inherit;
+    overflow-y: scroll;
+    align-items: center;
+    padding: 10px;
+}
+
+.upgrade{
+    display: flex;
+    width: 85%;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    padding: 10px 8px;
+    border-radius: 15px;
+    border: 5px solid yellow;
+    color: black;
+    text-align: center;
+}
+
+.upgrade .icon img{
+    width: 70px;
+    height: 70px;
+}
+
+.upgrade:hover{
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+.invalid {
+    opacity: 0.8;
+}
+
+.upgrade.invalid:hover{
+    transform: scale(1.0);
+    cursor: auto;
+}

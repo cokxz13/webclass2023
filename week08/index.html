@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>SolarSystem Clicker Game</title>
+</head>
+<body>
+    <header>
+        <button onclick="save()">SAVE</button>
+        <h1>Solar System Clicker Game</h1>
+        <button onclick="load()">LOAD</button>
+    </header>
+    <section>
+        <div class="container">
+            <div class="left">
+                <h2>scores : <span class="score">0</span></h2>
+                <img src="img/earth.png" alt="earth" class="clicker-image" draggable="false" onclick="increamentScore()">
+            </div>
+            <div class="right">
+                <div class="upgrade invalid" onclick="upgrade('pointer')">
+                    <div class="icon">
+                        <img src="img/click-pointer.png" widthalt="">
+                    </div>
+                    <div class="contents">
+                        <h2>Pointer</h2>
+                        <p>+1 click<p>
+                        <p> Cost: 50</p>
+                    </div>
+                    <div>
+                        <h3>Level <br/>
+                            <span class="level">0</span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="upgrade invalid" onclick="upgrade('auto')">
+                    <div class="icon">
+                        <img src="img/click-auto.png" alt="">
+                    </div>
+                    <div class="contents">
+                        <h2>Auto</h2>
+                        <p>+1 second</p>
+                        <p> Cost: 125</p>
+                    </div>
+                    <div>
+                        <h3>Level <br/>
+                            <span class="level">0</span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="upgrade invalid" onclick="upgrade('rocket')">
+                    <div class="icon">
+                        <img src="img/rocket.png" alt="">
+                    </div>
+                    <div class="contents">
+                        <h2>Rocket</h2>
+                        <p>+5 click</p>
+                        <p> Cost: 150</p>
+                    </div>
+                    <div>
+                        <h3>Level <br/>
+                            <span class="level">0</span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="upgrade invalid" onclick="upgrade('moon')">
+                    <div class="icon">
+                        <img src="img/moon.png" alt="">
+                    </div>
+                    <div class="contents">
+                        <h2>Moon</h2>
+                        <p>+6 second</p>
+                        <p>Cost: 600</p>
+                    </div>
+                    <div>
+                        <h3>Level <br/>
+                            <span class="level">0</span>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
