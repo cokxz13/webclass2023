@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: black;
+            height: 100vh;
+            margin: 0px;
+            padding: 10vh 15vw;
+            color: white;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        section {
+            display: flex;
+            position: relative;
+            justify-content: center;
+        }
+
+        .versus {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 15vw;
+            height: 15vw;
+        }
+
+        section img{
+            width: 30vw;
+            height: 30vw;
+        }
+
+        section img:not(.versus):hover{
+            border: 5px solid red;
+            cursor: pointer;
+        }
+
+        section > div{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        section > div > p {
+            font-size: 2rem;
+        }
+
+        .hide {
+            display: none;
+        }
+    
+    </style>
+</head>
+<body>
+    <h1> 컵라면 월드컵(8강) <span class="counts">1/16</span> </h1>
+    <section>
+        <div class="left">
+            <img src="img/간짬뽕.png" name="간짬뽕" alt="left-image" onclick="select()"/>
+            <p>간짬뽕</p>
+        </div>
+        <img class="versus" src="img/versus.png" alt="versus">
+        <div class="right">
+            <img src="img/김치사발면.png" name="김치사발면" alt="right-image" onclick="select()"/>
+            <p>김치사발면</p>
+        </div>
+
+        <div class="last hide">
+            <img/>
+            <p></p>
+        </div>
+    </section>
+    <script>
+        const history = {
+            '16':[],
+            '8':[],
+            '4':[],
+            '2':[],
+            '1':[]
+        }
+        const names = ['간짬뽕','김치사발면','너구리','라면볶이', '불닭볶음면', '새우탕면', '생생우동','신라면',
+            '오모리김치찌개라면','왕뚜껑','육개장사발면','진라면','진라면(순한맛)', '짜파게티', '짜파구리', '참깨라면',
+            '튀김우동', '팔도비빔면']
+        let round = 8
+        let match = 0
+        let uselist = []
+        function shuffle(array) {
+            // 피셔-예이츠 셔플 알고리즘 
+            for(let i = array.length - 1; i>0; i--) {
+                const randomPos = Math.floor(Math.random() * (i+1))
+                const temp = array[i]
+                array[i] = array[randomPos]
+                array[randomPos] = temp
+            }
+        }
+
+        function select(){
+            const selected = event.currentTarget.name
+            const r = `${round}`
+            if(round == 1) {
+                const last = document.querySelector('.last')
+                last.classList.remove('hide')
+                document.querySelector('.left').classList.add('hide')
+                document.querySelector('.right').classList.add('hide')
+                document.querySelector('.versus').classList.add('hide')
+                const img = last.querySelector('img')
+                const msg = last.querySelector('p')
+                img.src=`img/${selected}.png`
+                img.name = selected
+                msg.innerText = `당신의 최애 라면은 ${selected} 입니다!`
+                return
+            }
+            if(history[r].length < round) {
+                history[r].push(selected)
+                match++
+            } else {
+                round = Math.floor(round / 2)
+                history[`${round}`].push(selected)
+                uselist = history[r]
+                shuffle(uselist)
+                match = 0
+            }
+            console.log(history[r], match)
+            showNextMatch()
+    
+        }
+
+        function showNextMatch() {
+            const limg = document.querySelector('.left').querySelector('img')
+            const rimg = document.querySelector('.right').querySelector('img')
+            const lp = document.querySelector('.left').querySelector('p')
+            const rp = document.querySelector('.right').querySelector('p')
+
+            const counts = document.querySelector('.counts')
+            const lname = uselist[2*match]
+            const rname = uselist[2*match+1]
+
+            limg.src=`img/${lname}.png`
+            limg.name = lname
+            lp.innerText = lname
+            rimg.src=`img/${rname}.png`
+            rimg.name = rname
+            rp.innerText = rname
+            if(round != 1) counts.innerText = `${match}/${round}`
+            else counts.innerText = '결승전'
+            
+        }
+
+
+        function init() {
+            shuffle(names)
+            uselist = names
+            showNextMatch()
+        }
+
+        init()
+
+
+
+
+
+    </script>
+</body>
+</html>
